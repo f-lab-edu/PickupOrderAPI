@@ -1,46 +1,57 @@
 package com.pickup.user.entity
 
-import org.hibernate.validator.constraints.Length
+import com.pickup.user.dto.UserSignUpRequest
+import com.pickup.user.dto.UserUpdateRequest
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 import javax.persistence.*
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotEmpty
 
 @Entity
-data class User (
+@Table(name = "users")
+data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    var id: Long? = null,
 
-    @NotEmpty
-    @Length(min = 2, max = 50)
-    val username: String,
+    @Column(unique = true, nullable = false, length = 20)
+    var nickname: String,
 
-    @NotEmpty
-    @Email
-    val email: String,
+    @Column(unique = true, nullable = false)
+    var email: String,
 
-    @NotEmpty
-    val password: String,
+    @Column(nullable = false)
+    var password: String,
 
-    @Enumerated(EnumType.STRING)
-    val roles: Role = Role.USER,
-
-    @NotEmpty
-    @Column(unique = true)
-    val phoneNumber: String,
+    @Column(unique = true, nullable = false, length = 13)
+    var phoneNumber: String,
 
     @CreatedDate
-    val createdDate: LocalDateTime = LocalDateTime.now(),
+    @Column(nullable = false)
+    val joinedAt: LocalDateTime = LocalDateTime.now(),
 
     @LastModifiedDate
-    var lastModifiedDate: LocalDateTime = LocalDateTime.now()
-)
+    var updatedAt: LocalDateTime = LocalDateTime.now()
+) {
+    companion object {
+        fun fromDto(dto: UserSignUpRequest, passwordEncoder: PasswordEncoder): User {
+            return User(
+                nickname = dto.nickname,
+                email = dto.email,
+                password = passwordEncoder.encode(dto.password),
+                phoneNumber = dto.phoneNumber
+            )
+        }
+    }
 
-enum class Role {
-    USER,
-    ADMIN,
-    RESTAURANT_OWNER
+    fun updateFromDto(dto: UserUpdateRequest, passwordEncoder: PasswordEncoder) {
+        dto.nickname?.let { this.nickname = it }
+        dto.email?.let { this.email = it }
+        dto.password?.let { this.password = passwordEncoder.encode(it) }
+        dto.phoneNumber?.let { this.phoneNumber = it }
+        this.updatedAt = LocalDateTime.now()
+    }
+
+
 }

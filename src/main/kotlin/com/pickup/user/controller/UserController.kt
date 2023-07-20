@@ -1,22 +1,35 @@
 package com.pickup.user.controller
 
-import com.pickup.user.entity.User
+import com.pickup.user.dto.UserResponse
+import com.pickup.user.dto.UserSignUpRequest
+import com.pickup.user.dto.UserUpdateRequest
 import com.pickup.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/users")
+@Validated
 class UserController(private val userService: UserService) {
 
-    @PostMapping("/register")
-    fun registerUser(@Validated @RequestBody user: User): ResponseEntity<User> {
-        return ResponseEntity.ok(userService.registerUser(user))
+    /**
+     * 회원 가입
+     */
+    @PostMapping("/signUp")
+    fun signUpUser(@Valid @RequestBody userDto: UserSignUpRequest): ResponseEntity<UserResponse> {
+        return ResponseEntity.ok(userService.signUpUser(userDto))
     }
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<String> {
-        return ResponseEntity.badRequest().body(e.message)
+
+    /**
+     * 회원 수정
+     */
+    @PutMapping("/{userId}")
+    fun updateUser(@PathVariable userId: Long, @RequestBody updateDto: UserUpdateRequest): ResponseEntity<UserResponse> {
+        val user = userService.updateUser(userId, updateDto)
+        return ResponseEntity.ok(UserResponse.fromUser(user))
     }
+
 }
