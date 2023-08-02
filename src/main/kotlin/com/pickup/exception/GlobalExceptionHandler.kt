@@ -13,4 +13,9 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.message)
     }
 
+    @ExceptionHandler(value = [JwtAuthenticationException::class])
+    fun handleJwtAuthenticationException(e: JwtAuthenticationException): ResponseEntity<String> {
+        return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+    }
+
 }
