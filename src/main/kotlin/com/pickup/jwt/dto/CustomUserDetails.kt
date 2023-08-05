@@ -22,6 +22,10 @@ class CustomUserDetails(
         return username
     }
 
+    fun getRole(): Role {
+        return role
+    }
+
     override fun isAccountNonExpired(): Boolean {
         return true
     }
