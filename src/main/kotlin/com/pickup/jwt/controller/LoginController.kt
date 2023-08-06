@@ -3,9 +3,6 @@ package com.pickup.jwt.controller
 import com.pickup.jwt.JwtTokenProvider
 import com.pickup.jwt.dto.CustomUserDetails
 import com.pickup.jwt.dto.LoginRequest
-import com.pickup.jwt.service.CustomUserDetailsService
-import com.pickup.util.Role
-import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("/login")

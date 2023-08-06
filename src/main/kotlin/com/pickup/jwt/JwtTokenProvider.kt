@@ -1,5 +1,6 @@
 package com.pickup.jwt
 
+import com.pickup.exception.ErrorMessage
 import com.pickup.exception.JwtAuthenticationException
 import com.pickup.util.Role
 import io.jsonwebtoken.Jwts
@@ -63,8 +64,8 @@ class JwtTokenProvider {
         try {
             val claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
             return !claims.body.expiration.before(Date())
-        } catch (e: Exception) {
-            throw JwtAuthenticationException("만료되었거나 유효하지 않은 JWT 토큰입니다.")
+        } catch (ex: Exception) {
+            throw JwtAuthenticationException(ErrorMessage.TOKEN_INVALID, ex)
         }
     }
 }

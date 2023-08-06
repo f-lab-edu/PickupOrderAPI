@@ -1,5 +1,6 @@
 package com.pickup.jwt
 
+import com.pickup.exception.ErrorMessage
 import com.pickup.exception.JwtAuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
@@ -23,7 +24,7 @@ class JwtTokenFilter(private val jwtTokenProvider: JwtTokenProvider) : OncePerRe
                 SecurityContextHolder.getContext().authentication = auth
             }
         } catch (ex: Exception) {
-            throw JwtAuthenticationException("JWT 토큰 처리 중 오류가 발생했습니다.", ex)
+            throw JwtAuthenticationException(ErrorMessage.TOKEN_MALFORMED, ex)
         }
 
         filterChain.doFilter(request, response)
