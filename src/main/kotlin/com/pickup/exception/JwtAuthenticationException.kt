@@ -1,7 +1,13 @@
 package com.pickup.exception
 
-class JwtAuthenticationException : RuntimeException {
-    constructor(message: String, cause: Throwable) : super(message, cause)
+import org.springframework.http.HttpStatus
 
-    constructor(message: String) : super(message)
+class JwtAuthenticationException(
+    val errorMessage: ErrorMessage,
+    cause: Throwable?
+) : RuntimeException(errorMessage.message, cause) {
+
+    fun getHttpStatus(): HttpStatus {
+        return ErrorCode.JWT_ERROR.httpStatus
+    }
 }
