@@ -18,6 +18,6 @@ data class UserSignUpRequest(
     @field:Size(min = 8, max = 20)
     val password: String,
 
-    @field:Pattern(regexp="(^$|[0-9]{10})", message="유효한 전화번호를 입력하세요.")
+    @field:Pattern(regexp = "(^$|[0-9]{10})", message = "유효한 전화번호를 입력하세요.")
     val phoneNumber: String,
 )
