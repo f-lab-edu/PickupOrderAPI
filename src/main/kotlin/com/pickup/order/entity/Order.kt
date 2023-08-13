@@ -28,6 +28,9 @@ data class Order(
     @Column(nullable = false)
     val orderTime: LocalDateTime = LocalDateTime.now(),
 
+    @Column(nullable = false)
+    val pickupTime: LocalDateTime,
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var orderStatus: OrderStatus = OrderStatus.ORDERED,
@@ -51,4 +54,5 @@ data class Order(
         }
         this.orderStatus = newStatus
     }
+
 }

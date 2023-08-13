@@ -14,7 +14,12 @@ enum class ErrorMessage(
     DUPLICATE_EMAIL("이미 등록된 이메일입니다."),
     DUPLICATE_PHONE_NUMBER("이미 등록된 홴드폰 번호 입니다."),
     DUPLICATE_TEL("이미 등록된 홴드폰 번호 입니다."),
+    DUPLICATE_ORDER("동일 사용자는 1분 안에 2건 이상의 주문을 처리할 수 없습니다."),
+    CONCURRENT_ORDER("동시에 여러 주문을 시도했습니다. 다시 시도해주세요."),
     DUPLICATE_BUSINESS_NUMBER("이미 등록된 사업자 등록 번호 입니다."),
+
+    LIMIT_EXCEEDED_ORDER("1분이내 동일매장 재주문 건입니다."),
+    LIMIT_EXCEEDED_RESTAURANT("해당 시간대 주문이 밀려있습니다. 다른 픽업 시간을 선택해주세요."),
 
     INTERNAL_SERVER_ERROR("서버 내부 오류입니다."),
 

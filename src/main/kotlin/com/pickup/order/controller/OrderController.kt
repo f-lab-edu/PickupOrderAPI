@@ -39,11 +39,4 @@ class OrderController(
         return ResponseEntity.ok(orderStatusResponse)
     }
 
-
-    @DeleteMapping("/{orderId}")
-    @PreAuthorize("hasRole('ROLE_RESTAURANT')")
-    fun cancelOrder(@PathVariable orderId: Long): ResponseEntity<OrderResponse> {
-        val orderResponse = orderService.cancelOrder(orderId)
-        return ResponseEntity.ok(orderResponse)
-    }
 }
